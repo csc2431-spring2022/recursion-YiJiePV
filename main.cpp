@@ -1,3 +1,9 @@
+/*
+ * Title: main.cpp
+ * Purpose: Declare and implement four recursive functions
+ * Author: Karena Qian, Carlos Arias
+ * Date: May 14, 2022
+ * */
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -83,16 +89,85 @@ int main() {
 
 	return 0;
 }
-
+/**
+ * Fibonacci
+ * Calculates and returns a Fibonacci value from the given value
+ * @param n number from which a Fibonacci value is calculated
+ * @return Fibonacci value from given number
+ * */
 unsigned long long int Fibonacci(unsigned int n){
-	return 0;
+    if(n == 0 || n == 1){
+        return n;
+    }
+    else{
+        return Fibonacci(n - 1) + Fibonacci(n - 2);
+    }
 }
+/**
+ * PrintReverseString
+ * Writes a given string to the given ostream in reverse
+ * @param output to which the string is printed
+ * @param str to be written
+ * */
 void PrintReverseString(const string& str, ostream& output){
+    if(!str.empty()) {
+        char c = str.at(0);
+        if (str.length() == 1) {
+            output << c;
+        } else {
+            string str1 = str.substr(1, str.length());
+            PrintReverseString(str1, output);
+            output << c;
+        }
+    }
 }
 // You may change the parameters of these functions
+/**
+ * MinimumPosition
+ * Gives the position of the smallest element in given array
+ * @param array in which smallest element is found
+ * @param size of array
+ * @return index of smallest element
+ * */
 size_t MinimumPosition(const int array[], size_t size){
-	return 0;
+    if(size == 0){
+        return -1;
+    }
+    bool isMin = true;
+    int check = array[size - 1];
+    for(size_t i = size; i > 1; i--){
+        int v = array[i - 2];
+        if(check > v){
+            isMin = false;
+            break;
+        }
+    }
+    if(isMin){
+        return size - 1;
+    }
+    else{
+        return MinimumPosition(array, size - 1);
+    }
 }
+/**
+ * SelectionSort
+ * Sorts given array using selection sort
+ * @param size of array
+ * @param array to be sorted
+ * */
 void SelectionSort(int array[], size_t size){
-
+    if(size == 1 || size == 0){
+        return;
+    }
+    int max = array[size - 1];
+    size_t maxIndex = size - 1;
+    for(int i = static_cast<int>(size - 2); i >= 0; i--){
+        if(array[i] > max){
+            max = array[i];
+            maxIndex = i;
+        }
+    }
+    array[maxIndex] = array[size - 1];
+    array[size - 1] = max;
+    SelectionSort(array, size - 1);
 }
